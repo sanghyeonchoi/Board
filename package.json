@@ -1,0 +1,11 @@
+{
+  "name": "board",
+  "version": "1.0.0",
+  "description": "make a Board",
+  "main": "index.js",
+  "author": "sanghyeon",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
