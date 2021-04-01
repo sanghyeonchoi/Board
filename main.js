@@ -1,5 +1,6 @@
 const tableBody = document.querySelector(".table-body");
 const url = `http://localhost:3001/`;
+
 function getServer() {
   fetch(url)
     .then((response) => response.json())
@@ -14,11 +15,6 @@ function getServer() {
       const innerHTML = renderResults.join("");
       tableBody.innerHTML = innerHTML;
     });
-}
-function detialPage() {
-  fetch(`${url}/detail/:id`)
-    .then((response) => response.json())
-    .then((data) => {});
 }
 
 function init() {
