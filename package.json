@@ -6,6 +6,21 @@
   "author": "sanghyeon",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "@babel/core": "^7.13.14",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.12",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1"
+  },
+  "scripts": {
+    "start": "nodemon --exec babel-node init.js --delay 2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
