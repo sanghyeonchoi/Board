@@ -1,14 +1,7 @@
 const tableBody = document.querySelector(".table-body");
 const detailText = document.querySelector(".description");
-const deleteBtn = document.querySelector(".delete-btn");
-const url = `http://localhost:3001/`;
 
-// function getIds(num) {
-//   for (let i = 1; i < num.length + 1; i++) {
-//     const getUrlId = `${url}${i}`;
-//     return getUrlId;
-//   }
-// }
+const url = `http://localhost:3001/`;
 
 function getServer() {
   fetch(url)
@@ -18,22 +11,40 @@ function getServer() {
 
       const renderResults = results.map(
         ({ id, name, description, created, author }) => {
-          return `<tr><td>${id}</td><td><a href="#"class="name">${name}</a></td><td>${created}</td><td>${author}</td></tr>`;
+          return `<tr><td class="ids">${id}</td><td><a href="#"class="name">${name}</a></td><td>${created}</td><td>${author}</td><td><button class="delete-btn">삭제</button></td></tr>`;
         }
       );
 
       const innerHTML = renderResults.join("");
       tableBody.innerHTML = innerHTML;
       const title = document.querySelectorAll(".name");
-      renderDescription(title);
-      // getIds(title);
+      const id = document.querySelectorAll(".ids");
+      renderDescription(title, id);
+      const deleteBtn = document.querySelectorAll(".delete-btn");
+      console.log(deleteBtn);
+      deleteName(deleteBtn, id);
     });
 }
-function renderDescription(text) {
+
+function deleteName(btn, ids) {
+  for (let i = 0; i < btn.length; i++) {
+    btn[i].addEventListener("click", () => {
+      console.log(ids[i].innerText);
+
+      console.log("delete");
+      fetch(`${url}${ids[i].innerText}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+    });
+  }
+}
+
+function renderDescription(text, ids) {
   for (let i = 0; i < text.length; i++) {
     text[i].addEventListener("click", () => {
-      console.log(`${url}${i + 1}`);
-      fetch(`${url}${i + 1}`)
+      console.log(`${url}${ids[i].innerText}`);
+      fetch(`${url}${ids[i].innerText}`)
         .then((res) => res.json())
         .then((data) => {
           const detail = data;

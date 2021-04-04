@@ -47,20 +47,20 @@ function postCreate(req, res) {
     }
   );
 }
-//삭제
-// function deleteName(req, res) {
-//   db.query(
-//     "DELETE FROM icecream WHERE id =?",
-//     [req.params.id],
-//     function (error, del) {
-//       if (!error) {
-//         res.json({ message: "성공" });
-//       } else {
-//         res.json({ message: "실패" });
-//       }
-//     }
-//   );
-//}
+
+function deleteName(req, res) {
+  db.query(
+    "DELETE FROM icecream WHERE id =?",
+    [req.params.id],
+    function (error, del) {
+      if (!error) {
+        res.json({ message: "성공" });
+      } else {
+        res.json({ message: "실패" });
+      }
+    }
+  );
+}
 
 app.use(cors());
 app.use(cookieParser());
@@ -71,6 +71,6 @@ app.use(morgan("dev"));
 
 app.get("/", goHome);
 app.get("/:id", showDetail);
-app.get("delete/:id", deleteName);
+app.delete("/:id", deleteName);
 app.post("/create", postCreate);
 export default app;
