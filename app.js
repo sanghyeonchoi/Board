@@ -5,7 +5,6 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import mysql from "mysql";
-import fs from "fs";
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -15,26 +14,24 @@ const db = mysql.createConnection({
 });
 db.connect();
 const app = express();
-
+//메인 게시판
 function goHome(req, res) {
   db.query(`SELECT * FROM icecream`, function (error, icecreams) {
     res.send(icecreams);
   });
 }
+// 상세보기
 function showDetail(req, res) {
   db.query(
     `SELECT * FROM icecream WHERE id = ?`,
     [req.params.id],
     function (error, ids) {
+      console.log(ids);
       res.send(ids);
     }
   );
 }
-// function getCreate(req, res) {
-//   fs.readFile("./create.html", "utf-8", function (error, results) {
-//     res.send(results);
-//   });
-// }
+//글 생성
 function postCreate(req, res) {
   const body = req.body;
   console.log(body);
@@ -50,6 +47,20 @@ function postCreate(req, res) {
     }
   );
 }
+//삭제
+// function deleteName(req, res) {
+//   db.query(
+//     "DELETE FROM icecream WHERE id =?",
+//     [req.params.id],
+//     function (error, del) {
+//       if (!error) {
+//         res.json({ message: "성공" });
+//       } else {
+//         res.json({ message: "실패" });
+//       }
+//     }
+//   );
+//}
 
 app.use(cors());
 app.use(cookieParser());
@@ -59,7 +70,7 @@ app.use(helmet());
 app.use(morgan("dev"));
 
 app.get("/", goHome);
-app.get("/detail/:id", showDetail);
-// app.get("/create", getCreate);
+app.get("/:id", showDetail);
+app.get("delete/:id", deleteName);
 app.post("/create", postCreate);
 export default app;
