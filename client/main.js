@@ -31,7 +31,6 @@ function deleteName(btn, ids) {
     btn[i].addEventListener("click", () => {
       fetch(`${url}${ids[i].innerText}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
       });
     });
   }
