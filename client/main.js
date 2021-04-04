@@ -1,5 +1,5 @@
 const tableBody = document.querySelector(".table-body");
-const detailText = document.querySelector(".description");
+const descriptionBox = document.querySelector(".description");
 
 const url = `http://localhost:3001/`;
 
@@ -43,9 +43,7 @@ function renderDescription(text, ids) {
       fetch(`${url}${ids[i].innerText}`)
         .then((res) => res.json())
         .then((data) => {
-          const detail = data;
-          const render = detail[0].description;
-          detailText.innerHTML = render;
+          descriptionBox.innerHTML = data[0].description;
         });
     });
   }
