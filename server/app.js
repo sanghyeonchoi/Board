@@ -12,14 +12,18 @@ const db = mysql.createConnection({
   password: "pohang5086",
   database: "opentutorials",
 });
+
 db.connect();
+
 const app = express();
+
 //메인 게시판
 function goHome(req, res) {
   db.query(`SELECT * FROM icecream`, function (error, icecreams) {
     res.send(icecreams);
   });
 }
+
 // 상세보기
 function showDetail(req, res) {
   db.query(
