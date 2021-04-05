@@ -51,7 +51,7 @@ function postCreate(req, res) {
     }
   );
 }
-
+// 삭제
 function deleteName(req, res) {
   db.query(
     "DELETE FROM icecream WHERE id =?",
@@ -60,6 +60,23 @@ function deleteName(req, res) {
       if (!error) {
         res.json({ message: "성공" });
       } else {
+        res.json({ message: "실패" });
+      }
+    }
+  );
+}
+// 수정
+function update(req, res) {
+  const body = req.body;
+  console.log(body);
+  db.query(
+    `UPDATE icecream  SET name = ?, description = ?, created = ? WHERE id =?`,
+    [body.name, body.description, new Date(), req.params.id],
+    function (error, update) {
+      if (!error) {
+        res.json({ message: "성공" });
+      } else {
+        console.log(error);
         res.json({ message: "실패" });
       }
     }
@@ -75,6 +92,7 @@ app.use(morgan("dev"));
 
 app.get("/", goHome);
 app.get("/:id", showDetail);
+app.post("/:id", update);
 app.delete("/:id", deleteName);
 app.post("/create", postCreate);
 export default app;
