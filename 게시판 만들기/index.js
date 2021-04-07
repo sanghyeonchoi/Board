@@ -1,20 +1,17 @@
-const tableBody = document.querySelector(".table-body");
+const articles = document.querySelector(".articles");
 const descriptionBox = document.querySelector(".description");
 
-const url = `http://localhost:3001/`;
+const url = `http://localhost:3000/`;
 
-function getServer() {
+function contectDb() {
   fetch(url)
-    .then((response) => response.json())
+    .then((res) => res.json())
     .then((data) => {
-      const results = data;
-
-      const renderResults = results.map(({ id, name, created, author }) => {
+      const renderTable = data.map(({ id, name, created, author }) => {
         return `<tr><td class="ids">${id}</td><td><a href="#"class="name">${name}</a></td><td>${created}</td><td>${author}</td><td><button class="delete-btn">삭제</button></td><td><button class="update-btn">수정</button></td></tr>`;
       });
-
-      const innerHTML = renderResults.join("");
-      tableBody.innerHTML = innerHTML;
+      const innerHTML = renderTable.join("");
+      articles.innerHTML = innerHTML;
 
       const id = document.querySelectorAll(".ids");
 
@@ -52,13 +49,7 @@ function updateSomething(btn, ids) {
 function confirmSomething(btn) {
   for (let i = 0; i < btn.length; i++) {
     btn[i].addEventListener("click", (e) => {
-      // 모든 이벤트리스너의 콜백은 이벤트 객체 (여기서는 'e') 를 매개변수로 전달받는데
-      // 콜백함수 내에서 이벤트 객체의 preventDefault() 메서드를 호출하면
-      // 기본적으로 설정되어있는 동작들을 방지할 수 있어
-      // 이 경우에는 form 태그 안에 버튼을 눌렀을 때 발생하는 이벤트 객체에서 preventDefault 를 해서
-      // 기본값이라고 했던 새로고침 동작을 방지!
       e.preventDefault();
-
       const id = descriptionBox.querySelector(".id").innerText;
       const name = descriptionBox.querySelector(".updateName").value;
       const description = descriptionBox.querySelector(".updateDescription")
@@ -104,7 +95,6 @@ function renderDescription(text, ids) {
   }
 }
 function init() {
-  getServer();
+  contectDb();
 }
-
 init();
